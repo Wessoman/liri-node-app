@@ -40,3 +40,30 @@ function doSomething(){
     logIt += "\n";
     fs.appendFile("./log.txt", logIt, err=>{if(err)console.log(err)});
 }
+
+function concertSearch(){
+    let query = "";
+    for (let c in queryArr){
+        query += queryArr[c].replace(/\s/g, "%20");
+        query += "%20";
+    }
+    query = query.replace(/%20\b/, "");
+    let queryURL = "https://rest.bandsintown.com/artists/" + query + "/events?app_id=" + bandsintown.id;
+    
+    axios.get(queryURL).then(function(response){
+        // console.log(response.data);
+        console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        if (response.data[0] == undefined){
+            console.log("INVALID ARTIST OR NO UPCOMING SHOWS");
+            console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        } else {
+            for (let d=0; d<3; d++){
+                let date = moment(response.data[d].datetime).format("LL");
+                console.log(`Venue | ${response.data[d].venue.name}`);
+                console.log(`City  | ${response.data[d].venue.city}, ${response.data[d].venue.region}, ${response.data[d].venue.country}`);
+                console.log(`Date  | ${date}`);
+                console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+            }
+        }
+    });
+}
