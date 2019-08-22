@@ -67,3 +67,21 @@ function concertSearch(){
         }
     });
 }
+
+function getToken(client_id, client_secret){
+    return axios({
+        url: 'https://accounts.spotify.com/api/token',
+        method: 'post',
+        params: {
+            grant_type: 'client_credentials'
+        },
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            username: client_id,
+            password: client_secret
+        }
+   });
+}
+
