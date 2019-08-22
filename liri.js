@@ -96,4 +96,27 @@ async function getSpotifyData(client_id, client_secret){
     }
     query = query.replace(/%20\b/, "");
     let queryURL = "https://api.spotify.com/v1/search?q=" + query + "&type=track&limit=3";
-    
+
+    axios({
+        url: queryURL,
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    }).then(response => {
+        // console.log(JSON.stringify(response.data, null, 2));
+        console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        for (let t=0; t<3; t++){
+            console.log(`Artist    | ${response.data.tracks.items[t].artists[0].name}`);
+            console.log(`Song Name | ${response.data.tracks.items[t].name}`);
+            console.log(`Album     | ${response.data.tracks.items[t].album.name}`);
+            console.log(`Preview   | ${response.data.tracks.items[t].preview_url}`);
+            console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        }
+        return response.data;
+    }).catch(error => {
+        console.log("INVALID SONG TITLE");
+        console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        return error;
+    });
+}
