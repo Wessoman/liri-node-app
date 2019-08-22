@@ -120,3 +120,35 @@ async function getSpotifyData(client_id, client_secret){
         return error;
     });
 }
+
+function movieSearch(){
+    let query = "";
+    for (let c in queryArr){
+        query += queryArr[c].replace(/\s/g, "+");
+        query += "+";
+    }
+    query = query.replace(/\+$/, "");
+    if (query == ""){
+        query = "Mr.+Nobody";
+    }
+    let queryURL = "https://www.omdbapi.com/?t=" + query + "&y=&plot=short&apikey=" + omdb.key;
+    
+    axios.get(queryURL).then(function(response){
+        // console.log(response.data);
+        console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        if (response.data.Response == 'False'){
+            console.log("INVALID MOVIE TITLE");
+            console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        } else {
+                console.log(`Title                  | ${response.data.Title}`);
+                console.log(`Year                   | ${response.data.Year}`);
+                console.log(`IMDB Rating            | ${response.data.Ratings[0].Value}`);
+                console.log(`Rotten Tomatoes Rating | ${response.data.Ratings[1].Value}`);
+                console.log(`Country                | ${response.data.Country}`);
+                console.log(`Language               | ${response.data.Language}`);
+                console.log(`Plot                   | ${response.data.Plot}`);
+                console.log(`Actors                 | ${response.data.Actors}`);
+                console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+        }
+    });
+}
