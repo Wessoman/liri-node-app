@@ -85,3 +85,15 @@ function getToken(client_id, client_secret){
    });
 }
 
+async function getSpotifyData(client_id, client_secret){
+    const tokenData = await getToken(client_id, client_secret);
+    const token = tokenData.data.access_token;
+    
+    let query = "";
+    for (let s in queryArr){
+        query += queryArr[s].replace(/\s/g, "%20");
+        query += "%20";
+    }
+    query = query.replace(/%20\b/, "");
+    let queryURL = "https://api.spotify.com/v1/search?q=" + query + "&type=track&limit=3";
+    
