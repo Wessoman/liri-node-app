@@ -65,7 +65,7 @@ if (process.argv[2] == 'concert-this' ) {
         movieName = "Mr. Nobody";
     } 
 
-    request('http://www.omdbapi.com/?i=tt3896198&apikey=84741459&t=' + process.argv[3], function (error, response, body) {
+    request('http://www.omdbapi.com/?t=' + process.argv[3] + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
 
       var result  =  JSON.parse(body);
       console.log("Title :" + result.Title);
@@ -83,3 +83,11 @@ if (process.argv[2] == 'concert-this' ) {
   console.log('do what it says')
 }
 
+ else {
+    console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+    console.log("To use liri type an operater in the command line");
+    console.log("(concert-this, spotify-this-song, movie-this, do-what-it-says)");
+    console.log("followed by your search term.");
+    console.log('example "node liri movie-this toy story"');
+    console.log(`XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`);
+}
